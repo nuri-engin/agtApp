@@ -7,8 +7,17 @@ import Navbar from "./components/layouts/Navbar";
 import SignIn from "./components/auth/SignIn";
 import SignUp from "./components/auth/SignUp";
 import Dashboard from "./components/dashboard/Dashboard";
+
 import PeriodDetails from "./components/periods/PeriodDetails";
 import CreatePeriod from "./components/periods/CreatePeriod";
+
+import ProductDetails from "./components/products/ProductDetails";
+import CreateProduct from "./components/products/CreateProduct";
+import ProductList from "./components/products/ProductList";
+
+import FarmDetails from "./components/farms/FarmDetails";
+import CreateFarm from "./components/farms/CreateFarm";
+import FarmList from "./components/farms/FarmList";
 
 class App extends Component {
   render() {
@@ -18,10 +27,25 @@ class App extends Component {
           <Navbar />
           <Switch>
             <Route exact path="/" component={Dashboard} />
-            <Route path="/period/:id" component={PeriodDetails} />
-            <Route exact path="/create" component={CreatePeriod} />
+            
+            {/* AUTH */}
             <Route exact path="/signin" component={SignIn} />
             <Route exact path="/signup" component={SignUp} />
+
+            {/* PERIODS */}
+            <Route path="/period/:id" component={PeriodDetails} />
+            <Route exact path="/create-period" component={CreatePeriod} />
+
+            {/* PRODUCT */}
+            <Route path="/product/:id" component={ProductDetails} />
+            <Route exact path="/create-product" component={CreateProduct} />
+            <Route exact path="/productlist" component={ProductList} />
+
+             {/* PRODUCT */}
+             <Route path="/farm/:id" component={FarmDetails} />
+            <Route exact path="/create-farm" component={CreateFarm} />
+            <Route exact path="/farmlist" component={FarmList} />
+
           </Switch>
         </div>
       </BrowserRouter>

@@ -1,0 +1,55 @@
+//Core
+import React from "react";
+import { Redirect } from "react-router-dom";
+import moment from "moment";
+
+//Data
+import { connect } from "react-redux";
+import { firestoreConnect } from "react-redux-firebase";
+import { compose } from "redux";
+
+const ProductDetails = props => {
+  const { product, auth } = props;
+
+  if (!auth.uid) return <Redirect to="/signin" />;
+  if (product) {
+    return (
+      <div className="container section product-details">
+        <div className="card z-depth-0">
+          <div className="card-content">
+            <span className="card-title">{product.title}</span>
+            <p>{product.content}</p>
+            <br/><br/>
+          </div>
+          <div className="card-action grey lighten-4 grey-text">
+            <div>
+              Olusturan: {product.authorFirstName} {product.authorLastName}
+            </div>
+            <div> Tarih: {moment(product.createdAt.toDate()).calendar()}</div>
+          </div>
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <div className="container center">
+        <p>Urunler yukleniyor...</p>
+      </div>
+    );
+  }
+};
+
+const mapsStateToProps = (state, ownParams) => {
+  const id = ownParams.match.params.id;
+  const products = state.firestore.data.products;
+  const product = products ? products[id] : null;
+  return {
+    product: product,
+    auth: state.firebase.auth
+  };
+};
+
+export default compose(
+  connect(mapsStateToProps),
+  firestoreConnect([{ collection: "products" }])
+)(ProductDetails);

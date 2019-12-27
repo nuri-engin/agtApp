@@ -12,7 +12,13 @@ const SignedInLinks = props => {
     <div>
       <ul className="right">
         <li>
-          <NavLink to="/create">Yeni Donem</NavLink>
+            <NavLink to="/farmlist">Ureticiler</NavLink>
+        </li>
+        <li>
+            <NavLink to="/productlist">Urunler</NavLink>
+        </li>
+        <li>
+          <NavLink to="/create-period">Yeni Donem</NavLink>
         </li>
         <li>
           <a href="/" onClick={props.signOut}>

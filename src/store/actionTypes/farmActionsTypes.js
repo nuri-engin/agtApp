@@ -1,0 +1,2 @@
+export const CREATE_FARM = "CREATE_FARM";
+export const CREATE_FARM_ERROR = "CREATE_FARM_ERROR";
