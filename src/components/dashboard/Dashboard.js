@@ -14,7 +14,7 @@ import { compose } from "redux";
 class Dashboard extends Component {
   render() {
     const { periods, user_orders, farm_orders, auth } = this.props;
-
+    
     if (!auth.uid) return <Redirect to="/signin" />;
     return (
       <div className="dashboard container">
@@ -46,20 +46,6 @@ export default compose(
   connect(mapStateToProps),
   firestoreConnect([
     {collection: "periods", orderBy: ['createdAt', 'desc']},
-    {collection: "notifications", limit: 3, orderBy: ['time', 'desc']},
-    {
-      collection: 'farm_orders',
-      doc: 'february',
-      includeDoc: true,
-      subcollections: [{ collection: 'farms'}],
-      storeAs: "farm_orders"
-    },
-    {
-      collection: 'user_orders',
-      doc: 'february',
-      includeDoc: true,
-      subcollections: [{ collection: 'users'}],
-      storeAs: "user_orders"
-    },
+    {collection: "notifications", limit: 3, orderBy: ['time', 'desc']}
   ])
 )(Dashboard);

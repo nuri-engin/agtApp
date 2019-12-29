@@ -1,8 +1,7 @@
 //Core
 import React from "react";
-import { Redirect } from "react-router-dom";
 import moment from "moment";
-import { NavLink } from "react-router-dom";
+import { Redirect, Link, NavLink } from "react-router-dom";
 
 //Data
 import { connect } from "react-redux";
@@ -10,10 +9,9 @@ import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 
 const PeriodDetails = props => {
-  const { period, auth } = props;
-  
+  const { period, user_orders, farm_orders, auth } = props;
   if (!auth.uid) return <Redirect to="/signin" />;
-  if (period) {
+  if (period && user_orders && farm_orders ) {
     return (
       <div className="dashboard container">
         <div className="row">
@@ -44,11 +42,17 @@ const PeriodDetails = props => {
             </button>
             <br/><br/>
             <button className="btn grey lighten-2 z-depth-0">
-              <NavLink to="/usersorderslist">Tum Kullanici Siparisleri</NavLink>
+                <Link to={{
+                  pathname: "/usersorderslist",
+                  userOrders: user_orders
+              }}>Tum Kullanici Siparisleri</Link>
             </button>
             <br/><br/>
             <button className="btn grey lighten-2 z-depth-0">
-            <NavLink to="/farmorderslist">Tum Uretici Siparisleri</NavLink>
+            <Link to={{
+                  pathname: "/farmorderslist",
+                  farmOrders: farm_orders
+              }}>Tum Uretici Siparisleri</Link>
             </button>
           </div>
         </div>
@@ -77,11 +81,29 @@ const mapsStateToProps = (state, ownParams) => {
 
   return {
     period: period,
+    user_orders: state.firestore.ordered.user_orders,
+    farm_orders: state.firestore.ordered.farm_orders,
     auth: state.firebase.auth
   };
 };
 
 export default compose(
   connect(mapsStateToProps),
-  firestoreConnect([{ collection: "periods" }])
+  firestoreConnect([
+    { collection: "periods" },
+    {
+      collection: 'farm_orders',
+      doc: 'Subat',
+      includeDoc: true,
+      subcollections: [{ collection: 'farms'}],
+      storeAs: "farm_orders"
+    },
+    {
+      collection: 'user_orders',
+      doc: 'Subat',
+      includeDoc: true,
+      subcollections: [{ collection: 'users'}],
+      storeAs: "user_orders"
+    }
+  ])
 )(PeriodDetails);

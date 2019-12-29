@@ -21,6 +21,8 @@ import FarmList from "./components/farms/FarmList";
 
 import CreateOrder from "./components/orders/CreateOrder";
 import OrderCart from "./components/orders/OrderCart";
+import UserOrdersList from "./components/orders/UserOrdersList";
+import FarmOrdersList from "./components/orders/FarmOrdersList";
 
 class App extends Component {
   render() {
@@ -52,6 +54,8 @@ class App extends Component {
             {/* ORDERS */}
             <Route exact path="/create-order" component={CreateOrder} />
             <Route exact path="/ordercart" component={OrderCart} />
+            <Route exact path="/usersorderslist" component={UserOrdersList} />
+            <Route exact path="/farmorderslist" component={FarmOrdersList} />
 
           </Switch>
         </div>
