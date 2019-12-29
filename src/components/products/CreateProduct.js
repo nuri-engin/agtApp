@@ -23,7 +23,7 @@ class CreateProduct extends Component {
     e.persist();
     e.preventDefault();
     this.props.createProduct(this.state);
-    this.props.history.push("/");
+    this.props.history.push("/productlist");
   };
 
   render() {

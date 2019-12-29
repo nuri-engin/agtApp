@@ -23,7 +23,7 @@ class CreateFarm extends Component {
     e.persist();
     e.preventDefault();
     this.props.createFarm(this.state);
-    this.props.history.push("/");
+    this.props.history.push("/farmlist");
   };
 
   render() {

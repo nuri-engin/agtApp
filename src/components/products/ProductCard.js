@@ -2,10 +2,13 @@
 import React from "react";
 import moment from "moment";
 
-const ProductCard = ({ product, isOrderCart }) => {
+const ProductCard = ({ product, isOrderCart, handleAddToCard }) => {
   const showButtons = isOrderCart ? (
     <div>
-      <button>Add to Card</button>
+      <button onClick={e => {
+        e.preventDefault();
+        handleAddToCard(product)
+      }}>Add to Card</button>
     </div>
   ) : "";
 

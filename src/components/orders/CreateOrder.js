@@ -1,6 +1,6 @@
 //Core
 import React, { Component } from "react";
-import { Link, NavLink, Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 //Data
 import { connect } from "react-redux";
@@ -13,15 +13,18 @@ import "./createorder.css"
 
 class CreateOrder extends Component {
   state = {
-    title: "",
-    content: ""
+    userOrders: []
   };
 
-  handleChange = e => {
-    e.persist();
-    this.setState({
-      [e.target.id]: e.target.value
+  handleAddToCard = product => {
+    this.setState(state => {
+      const userOrders = [...state.userOrders, product];
+      return {
+        userOrders
+      };
     });
+
+    console.log(this.state);
   };
 
   render () {
@@ -32,7 +35,10 @@ class CreateOrder extends Component {
       <div className="give-order container">
         <br />
         <button className="btn grey lighten-2 z-depth-0">
-          <NavLink to="/">Siparislerinizi tamamlayin.</NavLink>
+          <Link to={{
+            pathname: "/ordercart",
+            userOrders: this.state.userOrders
+          }}> Siparislerinizi tamamlayin.</Link>
         </button>
         <br />
         <div>
@@ -44,7 +50,7 @@ class CreateOrder extends Component {
                     products.map(product => {
                         return (
                             <Link to={"/product/" + product.title} key={product.id}>
-                                <ProductCard product={product} isOrderCart={true} />
+                                <ProductCard product={product} isOrderCart={true} handleAddToCard={this.handleAddToCard}/>
                             </Link>
                         );
                     })

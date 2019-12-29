@@ -20,6 +20,7 @@ import CreateFarm from "./components/farms/CreateFarm";
 import FarmList from "./components/farms/FarmList";
 
 import CreateOrder from "./components/orders/CreateOrder";
+import OrderCart from "./components/orders/OrderCart";
 
 class App extends Component {
   render() {
@@ -50,6 +51,7 @@ class App extends Component {
 
             {/* ORDERS */}
             <Route exact path="/create-order" component={CreateOrder} />
+            <Route exact path="/ordercart" component={OrderCart} />
 
           </Switch>
         </div>
