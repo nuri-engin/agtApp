@@ -19,6 +19,8 @@ import FarmDetails from "./components/farms/FarmDetails";
 import CreateFarm from "./components/farms/CreateFarm";
 import FarmList from "./components/farms/FarmList";
 
+import CreateOrder from "./components/orders/CreateOrder";
+
 class App extends Component {
   render() {
     return (
@@ -45,6 +47,9 @@ class App extends Component {
              <Route path="/farm/:title" component={FarmDetails} />
             <Route exact path="/create-farm" component={CreateFarm} />
             <Route exact path="/farmlist" component={FarmList} />
+
+            {/* ORDERS */}
+            <Route exact path="/create-order" component={CreateOrder} />
 
           </Switch>
         </div>

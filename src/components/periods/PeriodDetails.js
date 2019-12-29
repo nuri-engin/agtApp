@@ -2,6 +2,7 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import moment from "moment";
+import { NavLink } from "react-router-dom";
 
 //Data
 import { connect } from "react-redux";
@@ -33,9 +34,22 @@ const PeriodDetails = props => {
           </div>
         </div>
           <div className="col s12 m5 offset-m1">
-            <button>Give Order</button> <button>Your Orders</button>
-              <br/> 
-            <button>All User Orders</button> <button>All Farm Orders</button>
+            <br/>
+            <button className="btn grey lighten-2 z-depth-0">
+              <NavLink to="/create-order">Siparis Ver</NavLink>
+            </button>
+            <br/><br/>
+            <button className="btn grey lighten-2 z-depth-0">
+              <NavLink to="/order-cart">Siparislerinizi Goruntuleyin</NavLink>
+            </button>
+            <br/><br/>
+            <button className="btn grey lighten-2 z-depth-0">
+              <NavLink to="/usersorderslist">Tum Kullanici Siparisleri</NavLink>
+            </button>
+            <br/><br/>
+            <button className="btn grey lighten-2 z-depth-0">
+            <NavLink to="/farmorderslist">Tum Uretici Siparisleri</NavLink>
+            </button>
           </div>
         </div>
       </div>
