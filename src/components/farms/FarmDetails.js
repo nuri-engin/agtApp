@@ -33,16 +33,24 @@ const FarmDetails = props => {
   } else {
     return (
       <div className="container center">
-        <p>Ureticiler yukleniyor...</p>
+        <p>Uretici bilgileri yuklenemedi...</p>
       </div>
     );
   }
 };
 
 const mapsStateToProps = (state, ownParams) => {
-  const id = ownParams.match.params.id;
   const farms = state.firestore.data.farms;
-  const farm = farms ? farms[id] : null;
+  let farm;
+
+  if (farms) {
+    Object.keys(farms).forEach(key => {
+      if (farms[key].title === ownParams.match.params.title) {
+        farm = farms[key]
+      }
+    });
+  } 
+
   return {
     farm: farm,
     auth: state.firebase.auth

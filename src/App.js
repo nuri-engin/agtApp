@@ -33,16 +33,16 @@ class App extends Component {
             <Route exact path="/signup" component={SignUp} />
 
             {/* PERIODS */}
-            <Route path="/period/:id" component={PeriodDetails} />
+            <Route path="/period/:title" component={PeriodDetails} />
             <Route exact path="/create-period" component={CreatePeriod} />
 
             {/* PRODUCT */}
-            <Route path="/product/:id" component={ProductDetails} />
+            <Route path="/product/:title" component={ProductDetails} />
             <Route exact path="/create-product" component={CreateProduct} />
             <Route exact path="/productlist" component={ProductList} />
 
              {/* PRODUCT */}
-             <Route path="/farm/:id" component={FarmDetails} />
+             <Route path="/farm/:title" component={FarmDetails} />
             <Route exact path="/create-farm" component={CreateFarm} />
             <Route exact path="/farmlist" component={FarmList} />
 

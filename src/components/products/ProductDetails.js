@@ -33,16 +33,24 @@ const ProductDetails = props => {
   } else {
     return (
       <div className="container center">
-        <p>Urunler yukleniyor...</p>
+        <p>Urun bilgileri yuklenemedi...</p>
       </div>
     );
   }
 };
 
 const mapsStateToProps = (state, ownParams) => {
-  const id = ownParams.match.params.id;
   const products = state.firestore.data.products;
-  const product = products ? products[id] : null;
+  let product;
+
+  if (products) {
+    Object.keys(products).forEach(key => {
+      if (products[key].title === ownParams.match.params.title) {
+        product = products[key]
+      }
+    });
+  }  
+
   return {
     product: product,
     auth: state.firebase.auth

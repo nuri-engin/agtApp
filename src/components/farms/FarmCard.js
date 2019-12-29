@@ -2,10 +2,10 @@
 import React from "react";
 import moment from "moment";
 
-const FarmSummary = ({ farm }) => {
+const FarmCard = ({ farm }) => {
   return (
-    <div className="farm-list section">
-      <div className="card z-depth-0 farm-summary">
+    <div className="farm-card section">
+      <div className="card z-depth-0 farm-card">
         <div className="card-content grey-text text-darken-3">
           <span className="card-title">{farm.title}</span>
           <p>
@@ -21,4 +21,4 @@ const FarmSummary = ({ farm }) => {
   );
 };
 
-export default FarmSummary;
+export default FarmCard;
