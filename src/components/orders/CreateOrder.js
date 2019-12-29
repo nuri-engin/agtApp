@@ -23,8 +23,6 @@ class CreateOrder extends Component {
         userOrders
       };
     });
-
-    console.log(this.state);
   };
 
   render () {

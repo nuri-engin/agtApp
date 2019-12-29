@@ -5,23 +5,29 @@ import { Redirect, Link } from "react-router-dom";
 //Data
 import { connect } from "react-redux";
 import { compose } from "redux";
+import { createOrder } from "../../store/actions/orderActions";
 
 //UI
 import ProductCard from "../products/ProductCard";
 
 class OrderCart extends Component {
-  render() {
+    handleCheckout = userOrders => {
+      this.props.createOrder(userOrders);
+      this.props.history.push("/");
+    };
+
+    render() {
       const {auth } = this.props;
       const {userOrders} = this.props.location;
       
       if (!auth.uid) return <Redirect to="/signin" />;
-      if (userOrders) {
+      if (userOrders && userOrders.length) {
           return (
                 <div className="container">
-                <h4>You current order list!</h4>
+                <h4>Mevcut siparisleriniz!</h4>
+                <button onClick={() => {this.handleCheckout(userOrders)}}> Siparisi Tamamla </button>
                 <div className="row">
                 <div className="col s5">
-                
                     {userOrders &&
                         userOrders.map(product => {
                             return (
@@ -48,6 +54,12 @@ class OrderCart extends Component {
     }
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    createOrder: orders => dispatch(createOrder(orders))
+  };
+};
+
 const mapsStateToProps = (state, ownParams) => {
   return {
     auth: state.firebase.auth
@@ -55,5 +67,5 @@ const mapsStateToProps = (state, ownParams) => {
 };
 
 export default compose(
-  connect(mapsStateToProps)
+  connect(mapsStateToProps, mapDispatchToProps)
 )(OrderCart);
