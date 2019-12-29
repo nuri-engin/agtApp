@@ -2,7 +2,13 @@
 import React from "react";
 import moment from "moment";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, isOrderCart }) => {
+  const showButtons = isOrderCart ? (
+    <div>
+      <button>Add to Card</button>
+    </div>
+  ) : "";
+
   return (
     <div className="product-card section">
       <div className="card z-depth-0 product-card">
@@ -16,6 +22,8 @@ const ProductCard = ({ product }) => {
               </div>
               <div> Tarih: {moment(product.createdAt.toDate()).calendar()}</div>
           </div>
+          <br/>
+            {showButtons}
         </div>
       </div>
     </div>

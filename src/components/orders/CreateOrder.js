@@ -1,21 +1,33 @@
 //Core
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { NavLink } from "react-router-dom";
-
-//UI
-import ProductCard from "../products/ProductCard";
+import { Link, NavLink, Redirect } from "react-router-dom";
 
 //Data
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 
+//UI
+import ProductCard from "../products/ProductCard";
+import "./createorder.css"
 
 class CreateOrder extends Component {
-  render () {
-    const { products } = this.props;
+  state = {
+    title: "",
+    content: ""
+  };
 
+  handleChange = e => {
+    e.persist();
+    this.setState({
+      [e.target.id]: e.target.value
+    });
+  };
+
+  render () {
+    const { auth, products } = this.props;
+
+    if (!auth.uid) return <Redirect to="/signin" />;
     return (
       <div className="give-order container">
         <br />
@@ -27,12 +39,12 @@ class CreateOrder extends Component {
             <p>Search/ Filter</p>
         </div>
         <div className="row">
-            <div className="col s12 m6">
+            <div className="col s5 create-order-card">
                 {products &&
                     products.map(product => {
                         return (
                             <Link to={"/product/" + product.title} key={product.id}>
-                                <ProductCard product={product} />
+                                <ProductCard product={product} isOrderCart={true} />
                             </Link>
                         );
                     })

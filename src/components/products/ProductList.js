@@ -1,7 +1,6 @@
 //Core
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink, Redirect } from "react-router-dom";
 
 //UI
 import ProductCard from "./ProductCard";
@@ -14,8 +13,9 @@ import { compose } from "redux";
 
 class ProductList extends Component {
   render () {
-    const { products } = this.props;
+    const { auth, products } = this.props;
 
+    if (!auth.uid) return <Redirect to="/signin" />;
     return (
       <div className="product container">
         <br />
