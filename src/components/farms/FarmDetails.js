@@ -22,27 +22,17 @@ const FarmDetails = props => {
       <div className="dashboard container">
         <div className="row">
           <div className="col s12 m6">
-            <div className="container section farm-details">
-              <div className="card z-depth-0">
-                <div className="card-content">
-                  <span className="card-title">{farm.title}</span>
-                  <p>{farm.content}</p>
-                  <br />
-                  <br />
-                </div>
-                <div className="card-action grey lighten-4 grey-text">
-                  <div>
-                    Olusturan: {farm.authorFirstName} {farm.authorLastName}
-                  </div>
-                  <div>
-                    {" "}
-                    Tarih: {moment(farm.createdAt.toDate()).calendar()}
-                  </div>
-                </div>
-              </div>
+            <div className="container">
+              <h3 className="card-title">{farm.title}</h3>
+              <h5>{farm.content}</h5>
+
+              Olusturan: {farm.authorFirstName} {farm.authorLastName}
+              <br />
+              Tarih: {moment(farm.createdAt.toDate()).calendar()}
+              <br /><br /><br />
             </div>
-            <div>
-              <p> FARM PRODUCTS</p>
+            <div className="container">
+              <h5> Ureticiye ait urunler: </h5>
               {products &&
                 products.map(product => {
                   return (
