@@ -19,7 +19,8 @@ const ProductDetails = props => {
           <div className="card-content">
             <span className="card-title">{product.title}</span>
             <p>{product.content}</p>
-            <br/><br/>
+            <br />
+            <br />
           </div>
           <div className="card-action grey lighten-4 grey-text">
             <div>
@@ -46,10 +47,10 @@ const mapsStateToProps = (state, ownParams) => {
   if (products) {
     Object.keys(products).forEach(key => {
       if (products[key].title === ownParams.match.params.title) {
-        product = products[key]
+        product = products[key];
       }
     });
-  }  
+  }
 
   return {
     product: product,

@@ -14,7 +14,7 @@ import PeriodList from "../periods/PeriodList";
 class Dashboard extends Component {
   render() {
     const { periods, auth } = this.props;
-    
+
     if (!auth.uid) return <Redirect to="/signin" />;
     return (
       <div className="dashboard container">
@@ -43,7 +43,7 @@ const mapStateToProps = state => {
 export default compose(
   connect(mapStateToProps),
   firestoreConnect([
-    {collection: "periods", orderBy: ['createdAt', 'desc']},
-    {collection: "notifications", limit: 3, orderBy: ['time', 'desc']}
+    { collection: "periods", orderBy: ["createdAt", "desc"] },
+    { collection: "notifications", limit: 3, orderBy: ["time", "desc"] }
   ])
 )(Dashboard);

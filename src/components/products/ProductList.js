@@ -10,9 +10,8 @@ import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 
-
 class ProductList extends Component {
-  render () {
+  render() {
     const { auth, products } = this.props;
 
     if (!auth.uid) return <Redirect to="/signin" />;
@@ -40,7 +39,7 @@ class ProductList extends Component {
       </div>
     );
   }
-};
+}
 
 const mapStateToProps = state => {
   return {
@@ -51,7 +50,5 @@ const mapStateToProps = state => {
 
 export default compose(
   connect(mapStateToProps),
-  firestoreConnect([
-    {collection: "products", orderBy: ['createdAt', 'desc']}
-  ])
+  firestoreConnect([{ collection: "products", orderBy: ["createdAt", "desc"] }])
 )(ProductList);

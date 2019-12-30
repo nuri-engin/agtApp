@@ -1,5 +1,5 @@
 //Core
-import React, {Component} from "react";
+import React, { Component } from "react";
 import { Redirect, Link } from "react-router-dom";
 
 //Data
@@ -11,49 +11,52 @@ import { createOrder } from "../../store/actions/orderActions";
 import ProductCard from "../products/ProductCard";
 
 class OrderCart extends Component {
-    handleCheckout = userOrders => {
-      this.props.createOrder(userOrders);
-      this.props.history.push("/");
-    };
+  handleCheckout = userOrders => {
+    this.props.createOrder(userOrders);
+    this.props.history.push("/");
+  };
 
-    render() {
-      const {auth } = this.props;
-      const {userOrders} = this.props.location;
-      console.log("userOrders", userOrders)
-      if (!auth.uid) return <Redirect to="/signin" />;
-      if (userOrders && userOrders.length) {
-        return (
-          <div className="container">
+  render() {
+    const { auth } = this.props;
+    const { userOrders } = this.props.location;
+    console.log("userOrders", userOrders);
+    if (!auth.uid) return <Redirect to="/signin" />;
+    if (userOrders && userOrders.length) {
+      return (
+        <div className="container">
           <h4>Mevcut siparisleriniz!</h4>
-          <button onClick={() => {this.handleCheckout(userOrders)}}> Siparisleri Gonder </button>
+          <button
+            onClick={() => {
+              this.handleCheckout(userOrders);
+            }}
+          >
+            {" "}
+            Siparisleri Gonder{" "}
+          </button>
           <div className="row">
-          <div className="col s5">
+            <div className="col s5">
               {userOrders &&
-                  userOrders.map(product => {
-                      return (
-                          <Link to={"/product/" + product.title} key={product.id}>
-                              <ProductCard product={product} isOrderCart={false}/>
-                          </Link>
-                      );
-                  })
-              }
-      </div>
-      </div>
-          
-      </div>
-    )
-          
-      } else {
-          return (
-            <div className='container'>
-                <h4>Your order cart is Empty!</h4>
-                <Redirect to="/create-order" />
+                userOrders.map(product => {
+                  return (
+                    <Link to={"/product/" + product.title} key={product.id}>
+                      <ProductCard product={product} isOrderCart={false} />
+                    </Link>
+                  );
+                })}
             </div>
-            
-          )
-      }
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="container">
+          <h4>Your order cart is Empty!</h4>
+          <Redirect to="/create-order" />
+        </div>
+      );
     }
-};
+  }
+}
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -68,5 +71,8 @@ const mapsStateToProps = (state, ownParams) => {
 };
 
 export default compose(
-  connect(mapsStateToProps, mapDispatchToProps)
+  connect(
+    mapsStateToProps,
+    mapDispatchToProps
+  )
 )(OrderCart);

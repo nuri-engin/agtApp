@@ -11,7 +11,7 @@ import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 
 class FarmList extends Component {
-   render() {
+  render() {
     const { auth, farms } = this.props;
 
     if (!auth.uid) return <Redirect to="/signin" />;
@@ -31,15 +31,15 @@ class FarmList extends Component {
                   </Link>
                 );
               })}
-            </div>
-            <div className="col s12 m5 offset-m1">
-              <p>Search/ Filter</p>
-            </div>
+          </div>
+          <div className="col s12 m5 offset-m1">
+            <p>Search/ Filter</p>
           </div>
         </div>
+      </div>
     );
-   }
-};
+  }
+}
 
 const mapStateToProps = state => {
   return {
@@ -50,7 +50,5 @@ const mapStateToProps = state => {
 
 export default compose(
   connect(mapStateToProps),
-  firestoreConnect([
-    {collection: "farms", orderBy: ['createdAt', 'desc']}
-  ])
+  firestoreConnect([{ collection: "farms", orderBy: ["createdAt", "desc"] }])
 )(FarmList);

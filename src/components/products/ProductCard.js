@@ -8,7 +8,7 @@ const ProductCard = ({ product, isOrderCart, handleAddToCard }) => {
       <button onClick={e => {
         e.preventDefault();
         handleAddToCard(product)
-      }}>Add to Card</button>
+      }}>Sepete Ekle</button>
     </div>
   ) : "";
 

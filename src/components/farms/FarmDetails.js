@@ -27,31 +27,38 @@ const FarmDetails = props => {
                 <div className="card-content">
                   <span className="card-title">{farm.title}</span>
                   <p>{farm.content}</p>
-                  <br/><br/>
+                  <br />
+                  <br />
                 </div>
                 <div className="card-action grey lighten-4 grey-text">
                   <div>
                     Olusturan: {farm.authorFirstName} {farm.authorLastName}
                   </div>
-                  <div> Tarih: {moment(farm.createdAt.toDate()).calendar()}</div>
+                  <div>
+                    {" "}
+                    Tarih: {moment(farm.createdAt.toDate()).calendar()}
+                  </div>
                 </div>
               </div>
             </div>
             <div>
               <p> FARM PRODUCTS</p>
               {products &&
-              products.map(product => {
-                return (
-                  <Link to={"/product/" + product.title} key={product.productid}>
-                    <ProductCard product={product}/>
-                  </Link>
-                );
-              })}
+                products.map(product => {
+                  return (
+                    <Link
+                      to={"/product/" + product.title}
+                      key={product.productid}
+                    >
+                      <ProductCard product={product} />
+                    </Link>
+                  );
+                })}
             </div>
           </div>
           <div className="col s12 m5 offset-m1">
-          <button>Edit Farm</button>
-              <br/> 
+            <button>Edit Farm</button>
+            <br />
             <button>
               <NavLink to="/create-product">Yeni Urun Ekle</NavLink>
             </button>
@@ -71,24 +78,26 @@ const FarmDetails = props => {
 const mapsStateToProps = (state, ownParams) => {
   const farms = state.firestore.data.farms;
   const products = state.firestore.data.products;
-  
-  let farm, farmId, farmProducts = [];
+
+  let farm,
+    farmId,
+    farmProducts = [];
 
   if (farms) {
     Object.keys(farms).forEach(key => {
       if (farms[key].title === ownParams.match.params.title) {
-        farm = farms[key]
-        farmId = farms[key].farmid
+        farm = farms[key];
+        farmId = farms[key].farmid;
       }
     });
   }
-  
-    if (products) {
+
+  if (products) {
     Object.keys(products).forEach(key => {
       if (farmId === products[key].farmid) {
-          farmProducts.push(products[key])
+        farmProducts.push(products[key]);
       }
-    })
+    });
   }
 
   return {
@@ -101,7 +110,7 @@ const mapsStateToProps = (state, ownParams) => {
 export default compose(
   connect(mapsStateToProps),
   firestoreConnect([
-    { collection: "farms"},
-    {collection: "products", orderBy: ['createdAt', 'desc']}
+    { collection: "farms" },
+    { collection: "products", orderBy: ["createdAt", "desc"] }
   ])
 )(FarmDetails);

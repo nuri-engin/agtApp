@@ -47,8 +47,8 @@ class App extends Component {
             <Route exact path="/create-product" component={CreateProduct} />
             <Route exact path="/productlist" component={ProductList} />
 
-             {/* PRODUCT */}
-             <Route path="/farm/:title" component={FarmDetails} />
+            {/* FARM */}
+            <Route path="/farm/:title" component={FarmDetails} />
             <Route exact path="/create-farm" component={CreateFarm} />
             <Route exact path="/farmlist" component={FarmList} />
 

@@ -9,7 +9,7 @@ import { compose } from "redux";
 
 //UI
 import ProductCard from "../products/ProductCard";
-import "./createorder.css"
+import "./createorder.css";
 
 class CreateOrder extends Component {
   state = {
@@ -25,7 +25,7 @@ class CreateOrder extends Component {
     });
   };
 
-  render () {
+  render() {
     const { auth, products } = this.props;
 
     if (!auth.uid) return <Redirect to="/signin" />;
@@ -33,32 +33,40 @@ class CreateOrder extends Component {
       <div className="give-order container">
         <br />
         <button className="btn grey lighten-2 z-depth-0">
-          <Link to={{
-            pathname: "/ordercart",
-            userOrders: this.state.userOrders
-          }}> Siparislerinizi tamamlayin.</Link>
+          <Link
+            to={{
+              pathname: "/ordercart",
+              userOrders: this.state.userOrders
+            }}
+          >
+            {" "}
+            Siparislerinizi tamamlayin.
+          </Link>
         </button>
         <br />
         <div>
-            <p>Search/ Filter</p>
+          <p>Search/ Filter</p>
         </div>
         <div className="row">
-            <div className="col s5 create-order-card">
-                {products &&
-                    products.map(product => {
-                        return (
-                            <Link to={"/product/" + product.title} key={product.id}>
-                                <ProductCard product={product} isOrderCart={true} handleAddToCard={this.handleAddToCard}/>
-                            </Link>
-                        );
-                    })
-                }
+          <div className="col s5 create-order-card">
+            {products &&
+              products.map(product => {
+                return (
+                  <Link to={"/product/" + product.title} key={product.id}>
+                    <ProductCard
+                      product={product}
+                      isOrderCart={true}
+                      handleAddToCard={this.handleAddToCard}
+                    />
+                  </Link>
+                );
+              })}
           </div>
         </div>
       </div>
     );
   }
-};
+}
 
 const mapStateToProps = state => {
   return {
@@ -69,7 +77,5 @@ const mapStateToProps = state => {
 
 export default compose(
   connect(mapStateToProps),
-  firestoreConnect([
-    {collection: "products", orderBy: ['createdAt', 'desc']}
-  ])
+  firestoreConnect([{ collection: "products", orderBy: ["createdAt", "desc"] }])
 )(CreateOrder);
