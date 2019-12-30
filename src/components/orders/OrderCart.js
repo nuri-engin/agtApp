@@ -19,29 +19,30 @@ class OrderCart extends Component {
     render() {
       const {auth } = this.props;
       const {userOrders} = this.props.location;
-      
+      console.log("userOrders", userOrders)
       if (!auth.uid) return <Redirect to="/signin" />;
       if (userOrders && userOrders.length) {
-          return (
-                <div className="container">
-                <h4>Mevcut siparisleriniz!</h4>
-                <button onClick={() => {this.handleCheckout(userOrders)}}> Siparisi Tamamla </button>
-                <div className="row">
-                <div className="col s5">
-                    {userOrders &&
-                        userOrders.map(product => {
-                            return (
-                                <Link to={"/product/" + product.title} key={product.id}>
-                                    <ProductCard product={product} isOrderCart={false}/>
-                                </Link>
-                            );
-                        })
-                    }
-            </div>
-            </div>
-                
-            </div>
-          )
+        return (
+          <div className="container">
+          <h4>Mevcut siparisleriniz!</h4>
+          <button onClick={() => {this.handleCheckout(userOrders)}}> Siparisleri Gonder </button>
+          <div className="row">
+          <div className="col s5">
+              {userOrders &&
+                  userOrders.map(product => {
+                      return (
+                          <Link to={"/product/" + product.title} key={product.id}>
+                              <ProductCard product={product} isOrderCart={false}/>
+                          </Link>
+                      );
+                  })
+              }
+      </div>
+      </div>
+          
+      </div>
+    )
+          
       } else {
           return (
             <div className='container'>

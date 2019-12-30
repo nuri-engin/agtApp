@@ -9,9 +9,18 @@ import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 
 const PeriodDetails = props => {
-  const { period, user_orders, farm_orders, auth } = props;
+  const { period, user_orders, farm_orders, profile, auth } = props;
+  
   if (!auth.uid) return <Redirect to="/signin" />;
   if (period && user_orders && farm_orders ) {
+    let getUserOrders; 
+    
+    user_orders.forEach((key, index) => {
+      if (key.id === profile.firstName + profile.lastName) { 
+        getUserOrders = user_orders[index].orders
+      }
+    });
+
     return (
       <div className="dashboard container">
         <div className="row">
@@ -38,7 +47,11 @@ const PeriodDetails = props => {
             </button>
             <br/><br/>
             <button className="btn grey lighten-2 z-depth-0">
-              <NavLink to="/order-cart">Siparislerinizi Goruntuleyin</NavLink>
+              <Link to={{
+                    pathname: "/orderdetail",
+                    userOrders: getUserOrders,
+                    isExistOrders: true
+                }}>Siparislerinizi Goruntuleyin</Link>
             </button>
             <br/><br/>
             <button className="btn grey lighten-2 z-depth-0">
@@ -78,32 +91,35 @@ const mapsStateToProps = (state, ownParams) => {
       }
     });
   }  
-
+  
   return {
     period: period,
     user_orders: state.firestore.ordered.user_orders,
     farm_orders: state.firestore.ordered.farm_orders,
+    profile: state.firebase.profile,
     auth: state.firebase.auth
   };
 };
 
 export default compose(
   connect(mapsStateToProps),
-  firestoreConnect([
-    { collection: "periods" },
-    {
-      collection: 'farm_orders',
-      doc: 'Subat',
-      includeDoc: true,
-      subcollections: [{ collection: 'farms'}],
-      storeAs: "farm_orders"
-    },
-    {
-      collection: 'user_orders',
-      doc: 'Subat',
-      includeDoc: true,
-      subcollections: [{ collection: 'users'}],
-      storeAs: "user_orders"
-    }
-  ])
+  firestoreConnect(props => {
+    return [
+      { collection: "periods" },
+      {
+        collection: 'farm_orders',
+        doc: props.match.params.title,
+        includeDoc: true,
+        subcollections: [{ collection: 'farms'}],
+        storeAs: "farm_orders"
+      },
+      {
+        collection: 'user_orders',
+        doc: props.match.params.title,
+        includeDoc: true,
+        subcollections: [{ collection: 'users'}],
+        storeAs: "user_orders"
+      }
+    ]
+})
 )(PeriodDetails);

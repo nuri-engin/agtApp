@@ -23,6 +23,7 @@ import CreateOrder from "./components/orders/CreateOrder";
 import OrderCart from "./components/orders/OrderCart";
 import UserOrdersList from "./components/orders/UserOrdersList";
 import FarmOrdersList from "./components/orders/FarmOrdersList";
+import OrderDetail from "./components/orders/OrderDetail";
 
 class App extends Component {
   render() {
@@ -54,6 +55,7 @@ class App extends Component {
             {/* ORDERS */}
             <Route exact path="/create-order" component={CreateOrder} />
             <Route exact path="/ordercart" component={OrderCart} />
+            <Route exact path="/orderdetail" component={OrderDetail} />
             <Route exact path="/usersorderslist" component={UserOrdersList} />
             <Route exact path="/farmorderslist" component={FarmOrdersList} />
 

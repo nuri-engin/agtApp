@@ -5,14 +5,14 @@ import { Link } from "react-router-dom";
 //UI
 import PeriodCard from "./PeriodCard";
 
-const PeriodList = ({ periods, user_orders, farm_orders }) => {
+const PeriodList = ({ periods }) => {
   return (
     <div className="period-list section">
       {periods &&
         periods.map(period => {
           return (
             <Link to={"/period/" + period.title} key={period.id}>
-              <PeriodCard period={period} user_orders={user_orders} farm_orders={farm_orders} />
+              <PeriodCard period={period} />
             </Link>
           );
         })}

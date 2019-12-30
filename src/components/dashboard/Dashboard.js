@@ -2,25 +2,25 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 
-//UI
-// import Notifications from "./Notifications";
-import PeriodList from "../periods/PeriodList";
-
 //Data
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 
+//UI
+// import Notifications from "./Notifications";
+import PeriodList from "../periods/PeriodList";
+
 class Dashboard extends Component {
   render() {
-    const { periods, user_orders, farm_orders, auth } = this.props;
+    const { periods, auth } = this.props;
     
     if (!auth.uid) return <Redirect to="/signin" />;
     return (
       <div className="dashboard container">
         <div className="row">
           <div className="col s12 m6">
-            <PeriodList periods={periods} user_orders={user_orders} farm_orders={farm_orders} />
+            <PeriodList periods={periods} />
           </div>
           <div className="col s12 m5 offset-m1">
             <p>Notifications</p>
@@ -34,10 +34,8 @@ class Dashboard extends Component {
 
 const mapStateToProps = state => {
   return {
-    periods: state.firestore.ordered.periods,
-    user_orders: state.firestore.ordered.user_orders,
-    farm_orders: state.firestore.ordered.farm_orders,
     auth: state.firebase.auth,
+    periods: state.firestore.ordered.periods,
     notifications: state.firestore.ordered.notifications
   };
 };
