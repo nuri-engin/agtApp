@@ -8,8 +8,11 @@ import { createProduct } from "../../store/actions/productActions";
 
 class CreateProduct extends Component {
   state = {
+    productid: "",
     title: "",
-    content: ""
+    content: "",
+    farmid: "",
+    farmname: ""
   };
 
   handleChange = e => {
@@ -34,11 +37,12 @@ class CreateProduct extends Component {
       <div className="container">
         <form className="white" onSubmit={this.handleSubmit}>
           <h5 className="grey-text text-darken-3">Yeni Urun</h5>
+
           <div className="input-field">
             <label htmlFor="title">Baslik</label>
             <input type="text" id="title" onChange={this.handleChange} />
           </div>
-
+          
           <div className="input-field">
             <label htmlFor="content">Detay</label>
             <textarea
@@ -46,6 +50,21 @@ class CreateProduct extends Component {
               id="content"
               onChange={this.handleChange}
             />
+          </div>
+
+          <div className="input-field">
+            <label htmlFor="productid">Urun ID </label>
+            <input type="number" id="productid" required onChange={this.handleChange} />
+          </div>
+
+          <div className="input-field">
+            <label htmlFor="farmname">Uretici </label>
+            <input type="text" id="farmname" required onChange={this.handleChange} />
+          </div>
+
+          <div className="input-field">
+            <label htmlFor="farmid">Uretici ID </label>
+            <input type="number" id="farmid" required onChange={this.handleChange} />
           </div>
 
           <div className="input-field">

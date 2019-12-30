@@ -9,7 +9,8 @@ import { createFarm } from "../../store/actions/farmActions";
 class CreateFarm extends Component {
   state = {
     title: "",
-    content: ""
+    content: "",
+    farmid: ""
   };
 
   handleChange = e => {
@@ -46,6 +47,11 @@ class CreateFarm extends Component {
               id="content"
               onChange={this.handleChange}
             />
+          </div>
+
+          <div className="input-field">
+            <label htmlFor="farmid">Farm ID</label>
+            <input type="number" id="farmid" required onChange={this.handleChange} />
           </div>
 
           <div className="input-field">

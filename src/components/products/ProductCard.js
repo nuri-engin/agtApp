@@ -17,14 +17,16 @@ const ProductCard = ({ product, isOrderCart, handleAddToCard }) => {
       <div className="card z-depth-0 product-card">
         <div className="card-content grey-text text-darken-3">
           <span className="card-title">{product.title}</span>
-          <p>Detay: {product.content}</p>
+          <p>{product.content}</p>
           <br />
-          <div className="card-action grey lighten-4 grey-text">
-              <div>
-                  Olusturan: {product.authorFirstName} {product.authorLastName}
-              </div>
-              <div> Tarih: {moment(product.createdAt.toDate()).calendar()}</div>
-          </div>
+          <p className="grey-text">Urun ID: {product.productid}</p>
+          <p className="grey-text">Uretici: {product.farmname} ({product.farmid})</p>
+          <p className="grey-text">
+            Olusturan: {product.authorFirstName} {product.authorLastName}
+          </p>
+          <p className="grey-text">
+            Tarih: {moment(product.createdAt.toDate()).calendar()}
+          </p>
           <br/>
             {showButtons}
         </div>
