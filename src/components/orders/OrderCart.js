@@ -11,15 +11,15 @@ import { createOrder } from "../../store/actions/orderActions";
 import ProductCard from "../products/ProductCard";
 
 class OrderCart extends Component {
-  handleCheckout = userOrders => {
-    this.props.createOrder(userOrders);
+  handleCheckout = (userOrders, period) => {
+    this.props.createOrder(userOrders, period);
     this.props.history.push("/");
   };
 
   render() {
     const { auth } = this.props;
-    const { userOrders } = this.props.location;
-    console.log("userOrders", userOrders);
+    const { userOrders, period } = this.props.location;
+
     if (!auth.uid) return <Redirect to="/signin" />;
     if (userOrders && userOrders.length) {
       return (
@@ -27,11 +27,15 @@ class OrderCart extends Component {
           <h4>Mevcut siparisleriniz!</h4>
           <button
             onClick={() => {
-              this.handleCheckout(userOrders);
+              if (!period) {
+                alert("Dagitim donemi bilgisi bulunamadi! Geri yonlendiriliyorsunuz...");
+                return <Redirect to="/" />
+              } else {
+                this.handleCheckout(userOrders, period);
+              }
             }}
           >
-            {" "}
-            Siparisleri Gonder{" "}
+            Siparisleri Kaydet ({userOrders.length} Urun)
           </button>
           <div className="row">
             <div className="col s5">
@@ -60,7 +64,7 @@ class OrderCart extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    createOrder: orders => dispatch(createOrder(orders))
+    createOrder: (orders, period) => dispatch(createOrder(orders, period))
   };
 };
 

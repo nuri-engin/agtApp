@@ -5,20 +5,25 @@ import {
     CREATE_FARM_ORDER_ERROR
   } from "../actionTypes/orderActionTypes";
   
-  export const createOrder = orders => {
+  export const createOrder = (orders, period) => {
     return (dispatch, getState, { getFirebase, getFirestore }) => {
         //async ....
         const firestore = getFirestore();
         const profile = getState().firebase.profile;
+        const uid = getState().firebase.auth.uid;
         
         let orderObj = {}
         let orderData = {
-            orders: orders};
-
+            order_user: profile.firstName + profile.lastName,
+            order_userId: uid,
+            createdAt: new Date(),
+            orders: orders
+        };
+        
         // #1. User ORDERs request:
         firestore
             .collection("user_orders")
-            .doc("Subat")
+            .doc(period.title)
             .collection("users")
             .doc(profile.firstName + profile.lastName)
             .set(orderData, {merge: true})
@@ -30,17 +35,17 @@ import {
                 dispatch({ type: CREATE_USER_ORDER_ERROR, err });
                 console.log("ERROR")
         });
-
+        
         // #2. Farm ORDERs request:
         orderData.orders.forEach(order => {
-
+            
             // Create SUBCOLLECTION
             firestore
                 .collection("farm_orders")
-                .doc("Subat")
+                .doc(period.title)
                 .collection("farms")
-                .doc(order.prod_farm_name)
-                .set({orders: getFarmOrders(order.prod_farm_name)}, {merge: true}) 
+                .doc(order.farmname)
+                .set({orders: getFarmOrders(order.farmname)}, {merge: true}) 
                 .then(() => {
                     dispatch({ type: CREATE_FARM_ORDER, orderData });
                     console.log("Farm orders proceed!")
@@ -51,30 +56,28 @@ import {
                 });
         });
 
-        function getFarmOrders (farm_name) {
+        function getFarmOrders (farmname) {
             orderData.orders.forEach(order => {
 
-                if (!isEmpty(orderObj) && !isEmpty(orderObj[order.prod_farm_name])) {
-                    orderObj[order.prod_farm_name].push(order)
-                    console.log("pushed", order.prod_name)
+                if (!isEmpty(orderObj) && !isEmpty(orderObj[order.farmname])) {
+                    orderObj[order.farmname].push(order);
                 } else {
-                    orderObj[order.prod_farm_name] = [order]
-                    console.log("created")
+                    orderObj[order.farmname] = [order];
                 }
             });
 
-            combineFarmData(farm_name)
+            combineFarmData(farmname)
 
-            return orderObj[farm_name]
+            return orderObj[farmname]
         }
 
-        function combineFarmData (farm_name) {
+        function combineFarmData (farmname) {
             if (getState().firestore.ordered.farm_orders) {
                 getState().firestore.ordered.farm_orders.forEach(order => {
-                    if (order.id === farm_name) {
+                    if (order.id === farmname) {
                         order.orders.forEach(item => {
-                            orderObj[item.prod_farm_name].push(item)
-                        })
+                            orderObj[item.farmname].push(item)
+                        });
                     }
                 })
             }

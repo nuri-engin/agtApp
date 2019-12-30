@@ -1,7 +1,7 @@
 //Core
 import React from "react";
 import moment from "moment";
-import { Redirect, Link, NavLink } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
 //Data
 import { connect } from "react-redux";
@@ -46,7 +46,12 @@ const PeriodDetails = props => {
           <div className="col s12 m5 offset-m1">
             <br />
             <button className="btn grey lighten-2 z-depth-0">
-              <NavLink to="/create-order">Siparis Ver</NavLink>
+              <Link
+                  to={{
+                    pathname: "/create-order",
+                    period: period
+                  }}
+                >Siparis Ver</Link>
             </button>
             <br />
             <br />
