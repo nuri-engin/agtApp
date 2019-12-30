@@ -10,14 +10,14 @@ import { compose } from "redux";
 
 const PeriodDetails = props => {
   const { period, user_orders, farm_orders, profile, auth } = props;
-
+  
   if (!auth.uid) return <Redirect to="/signin" />;
   if (period && user_orders && farm_orders) {
-    let getUserOrders;
+    let currentUserOrders;
 
     user_orders.forEach((key, index) => {
       if (key.id === profile.firstName + profile.lastName) {
-        getUserOrders = user_orders[index].orders;
+        currentUserOrders = user_orders[index].orders;
       }
     });
 
@@ -54,8 +54,8 @@ const PeriodDetails = props => {
               <Link
                 to={{
                   pathname: "/orderdetail",
-                  userOrders: getUserOrders,
-                  isExistOrders: true
+                  userOrders: currentUserOrders,
+                  period: period
                 }}
               >
                 Siparislerinizi Goruntuleyin
@@ -67,7 +67,8 @@ const PeriodDetails = props => {
               <Link
                 to={{
                   pathname: "/usersorderslist",
-                  userOrders: user_orders
+                  userOrders: user_orders,
+                  period: period 
                 }}
               >
                 Tum Kullanici Siparisleri
@@ -79,7 +80,8 @@ const PeriodDetails = props => {
               <Link
                 to={{
                   pathname: "/farmorderslist",
-                  farmOrders: farm_orders
+                  farmOrders: farm_orders,
+                  period: period
                 }}
               >
                 Tum Uretici Siparisleri

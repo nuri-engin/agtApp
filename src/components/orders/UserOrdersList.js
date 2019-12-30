@@ -1,25 +1,21 @@
 //Core
 import React, { Component } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 //Data
 import { connect } from "react-redux";
 import { compose } from "redux";
 
-//UI
-import ProductCard from "../products/ProductCard";
-import "./createorder.css";
-
 class UserOrdersList extends Component {
   render() {
     const { auth } = this.props;
-    const { userOrders } = this.props.location;
-    let allOrders = [];
-
+    const { userOrders, period } = this.props.location;
+    
     if (!auth.uid) return <Redirect to="/signin" />;
-    if (userOrders) {
-      userOrders.forEach(order => (allOrders = order.orders));
-
+    if (userOrders && userOrders.length) {
+      let allUsers = []
+      userOrders.forEach(user => allUsers.push(user.id));
+    
       return (
         <div className="give-order container">
           <div>
@@ -27,12 +23,11 @@ class UserOrdersList extends Component {
           </div>
           <div className="row">
             <div className="col s5 create-order-card">
-              {allOrders &&
-                allOrders.map(product => {
+              <h5> {period.title} dagitim donemi: Siparis Veren Kullanicilar...</h5>
+              {allUsers &&
+                allUsers.map((user, index) => {
                   return (
-                    <Link to={"/product/" + product.title} key={product.id}>
-                      <ProductCard product={product} />
-                    </Link>
+                    <p key={index}>{user}</p>
                   );
                 })}
             </div>
@@ -42,7 +37,7 @@ class UserOrdersList extends Component {
     } else {
       return (
         <div className="container">
-          <span>NO DATA </span>
+          <h4>{period ? period.title + ' dagitim donemi: ' : ''} Henuz siparis veren kullanici yoktur!</h4>
         </div>
       );
     }

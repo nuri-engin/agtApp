@@ -9,11 +9,11 @@ import { compose } from "redux";
 class FarmOrdersList extends Component {
   render() {
     const { auth } = this.props;
-    const { farmOrders } = this.props.location;
-    let allFarms = [];
+    const { farmOrders, period } = this.props.location;
 
     if (!auth.uid) return <Redirect to="/signin" />;
-    if (farmOrders) {
+    if (farmOrders && farmOrders.length) {
+      let allFarms = []
       farmOrders.forEach(farm => allFarms.push(farm.id));
 
       return (
@@ -23,14 +23,11 @@ class FarmOrdersList extends Component {
           </div>
           <div className="row">
             <div className="col s5 create-order-card">
-              <h4>Mevcut Siparisi olan Ureticiler</h4>
-
+            <h5>{period.title} dagitim donemi: Siparis Alan Ureticiler...</h5>
               {allFarms &&
-                allFarms.map(farm => {
+                allFarms.map((farm, index) => {
                   return (
-                    <div>
-                      <h5>Uretici: {farm}</h5>
-                    </div>
+                    <p key={index}>{farm}</p>
                   );
                 })}
             </div>
@@ -40,7 +37,7 @@ class FarmOrdersList extends Component {
     } else {
       return (
         <div className="container">
-          <span>NO DATA </span>
+          <h4>{period ? period.title + ' dagitim donemi: ' : ''} Henuz siparis alan uretici yoktur!</h4>
         </div>
       );
     }

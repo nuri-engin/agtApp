@@ -12,13 +12,13 @@ import ProductCard from "../products/ProductCard";
 class OrderCart extends Component {
   render() {
     const { auth } = this.props;
-    const { userOrders } = this.props.location;
+    const { userOrders, period } = this.props.location;
 
     if (!auth.uid) return <Redirect to="/signin" />;
     if (userOrders && userOrders.length) {
       return (
         <div className="container">
-          <h4>Mevcut siparisleriniz!</h4>
+          <h4>{period.title} dagitim donemi: Mevcut siparisleriniz...</h4>
           <div className="row">
             <div className="col s5">
               {userOrders &&
@@ -36,7 +36,7 @@ class OrderCart extends Component {
     } else {
       return (
         <div className="container">
-          <h4>Henuz kayitli bir siparis listeniz yoktur!</h4>
+          <h4>{period ? period.title + ' dagitim donemi: ' : ''} Henuz kayitli bir siparis listeniz yoktur!</h4>
         </div>
       );
     }
