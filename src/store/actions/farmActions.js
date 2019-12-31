@@ -1,6 +1,8 @@
 import {
     CREATE_FARM,
-    CREATE_FARM_ERROR
+    UPDATE_FARM,
+    CREATE_FARM_ERROR,
+    UPDATE_FARM_ERROR
   } from "../actionTypes/farmActionsTypes";
   
   export const createFarm = farm => {
@@ -25,5 +27,35 @@ import {
         .catch(err => {
           dispatch({ type: CREATE_FARM_ERROR, err });
         });
+    };
+  };
+
+  export const updateFarm = farm => {
+    return (dispatch, getState, { getFirebase, getFirestore }) => {
+      //async ....
+      const firestore = getFirestore();
+      const profile = getState().firebase.profile;
+      const uid = getState().firebase.auth.uid;
+      let docID;
+      
+      getState().firestore.ordered.farms.forEach(stateFarm => {
+        if (stateFarm.farmid === farm.farmid) {
+          docID = stateFarm.id
+        }
+      })
+
+      const updateRef = firestore.collection('farms').doc(docID);
+      updateRef.set({
+        ...farm,
+        authorFirstName: profile.firstName,
+        authorLastName: profile.lastName,
+        authorId: uid,
+        createdAt: new Date()
+      }).then(() => {
+        dispatch({ type: UPDATE_FARM, farm });
+      })
+      .catch(err => {
+        dispatch({ type: UPDATE_FARM_ERROR, err });
+      });
     };
   };

@@ -19,7 +19,7 @@ class FarmList extends Component {
       <div className="farm container">
         <br />
         <button className="btn grey lighten-2 z-depth-0">
-          <NavLink to="/create-farm">Yeni Uretici Ekle</NavLink>
+          <NavLink to="/farmdata">Yeni Uretici Ekle</NavLink>
         </button>
         <div className="row">
           <div className="col s12 m6">

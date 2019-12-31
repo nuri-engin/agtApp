@@ -16,7 +16,7 @@ import ProductData from "./components/products/ProductData";
 import ProductList from "./components/products/ProductList";
 
 import FarmDetails from "./components/farms/FarmDetails";
-import CreateFarm from "./components/farms/CreateFarm";
+import FarmData from "./components/farms/FarmData";
 import FarmList from "./components/farms/FarmList";
 
 import CreateOrder from "./components/orders/CreateOrder";
@@ -49,7 +49,7 @@ class App extends Component {
 
             {/* FARM */}
             <Route path="/farm/:title" component={FarmDetails} />
-            <Route exact path="/create-farm" component={CreateFarm} />
+            <Route exact path="/farmdata" component={FarmData} />
             <Route exact path="/farmlist" component={FarmList} />
 
             {/* ORDERS */}

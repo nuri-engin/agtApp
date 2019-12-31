@@ -48,7 +48,19 @@ const FarmDetails = props => {
             </div>
           </div>
           <div className="col s12 m5 offset-m1">
-            <button>Edit Farm</button>
+            <button>
+              <Link
+                    to={{
+                      pathname: "/farmdata",
+                      fromFarm: farm.title,
+                      farm: {
+                        farmid: farm.farmid,
+                        title: farm.title,
+                        content: farm.content
+                      }
+                    }}
+                  >Guncelle</Link>
+            </button>
             <br />
             <button>
               <Link
