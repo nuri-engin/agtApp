@@ -108,6 +108,7 @@ const mapStateToProps = state => {
     auth: state.firebase.auth
   };
 };
+
 const mapDispatchToProps = dispatch => {
   return {
     updateProduct: product => dispatch(updateProduct(product)),
