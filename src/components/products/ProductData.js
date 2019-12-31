@@ -4,14 +4,14 @@ import { Redirect } from "react-router-dom";
 
 //Data
 import { connect } from "react-redux";
-import { createProduct } from "../../store/actions/productActions";
+import { createProduct, updateProduct } from "../../store/actions/productActions";
 
 class ProductData extends Component {
   state = {
-    productid: 0,
+    productid: "",
     title: "",
     content: "",
-    farmid: 0,
+    farmid: "",
     farmname: ""
   };
 
@@ -26,53 +26,76 @@ class ProductData extends Component {
     });
   };
 
-  handleSubmit = e => {
-    e.persist();
-    e.preventDefault();
-    this.props.createProduct(this.state);
+  handleSubmit = product => {
+    product ? 
+      this.props.updateProduct(this.state) : 
+      this.props.createProduct(this.state);
+    
     this.props.history.goBack();
   };
 
+  // Update Product process
+  componentDidMount = () => {
+    const { product } = this.props.location;
+
+    if (product) {
+      this.setState(state => {
+        const updatedState = Object.keys(state)
+          .reduce(function(accumulator, key) {
+            accumulator[key] = product[key]
+            return accumulator
+          }, {});
+
+        return updatedState;
+      });
+    }
+  }
+
   render() {
     const { auth } = this.props;
+    const { product } = this.props.location;
 
     if (!auth.uid) return <Redirect to="/signin" />;
     return (
       <div className="container">
-        <form className="white" onSubmit={this.handleSubmit}>
-          <h5 className="grey-text text-darken-3">Yeni Urun</h5>
+        <form className="white" onSubmit={(e) => {
+            e.persist(); e.preventDefault();
+            this.handleSubmit(product)
+          }}>
+          <h5 className="grey-text text-darken-3">Urun Karti: {product ? "Guncelle" : "Yeni"}</h5>
 
           <div className="input-field">
-            <label htmlFor="title">Baslik</label>
-            <input type="text" id="title" onChange={this.handleChange} />
+            <label htmlFor="title" className={product ? "active" : ""}>Baslik</label>
+            <input type="text" id="title" onChange={this.handleChange} defaultValue={product ? product.title : ""}/>
           </div>
           
           <div className="input-field">
-            <label htmlFor="content">Detay</label>
+            <label htmlFor="content" className={product ? "active" : ""}>Detay</label>
             <textarea
               className="materialize-textarea"
               id="content"
+              defaultValue={product ? product.content : undefined}
               onChange={this.handleChange}
             />
           </div>
 
           <div className="input-field">
-            <label htmlFor="productid">Urun ID </label>
-            <input type="number" id="productid" required onChange={this.handleChange} />
+            <label htmlFor="productid" className={product ? "active" : ""}>Urun ID </label>
+            <input type="number" id="productid" required defaultValue={product ? product.productid : ""} onChange={this.handleChange} />
           </div>
 
           <div className="input-field">
-            <label htmlFor="farmname">Uretici </label>
-            <input type="text" id="farmname" required onChange={this.handleChange} />
+            <label htmlFor="farmname" className={product ? "active" : ""}>Uretici </label>
+            <input type="text" id="farmname" required defaultValue={product ? product.farmname : ""} onChange={this.handleChange} />
           </div>
 
           <div className="input-field">
-            <label htmlFor="farmid">Uretici ID </label>
-            <input type="number" id="farmid" required onChange={this.handleChange} />
+            <label htmlFor="farmid" className={product ? "active" : ""}>Uretici ID </label>
+            <input type="number" id="farmid" required defaultValue={product ? product.farmid : ""} onChange={this.handleChange} />
           </div>
 
           <div className="input-field">
-            <button className="btn pink lighten-1 z-depth-0">Olustur</button>
+            <button className="btn pink lighten-1 z-depth-0">{product ? "Guncelle" : "Olustur"}</button>
           </div>
         </form>
       </div>
@@ -87,6 +110,7 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
+    updateProduct: product => dispatch(updateProduct(product)),
     createProduct: product => dispatch(createProduct(product))
   };
 };

@@ -1,6 +1,6 @@
 //Core
 import React from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import moment from "moment";
 
 //Data
@@ -21,7 +21,14 @@ const ProductDetails = props => {
             <p>{product.content}</p>
             <br />
             <br />
-            <button>Urun Bilgilerini Guncelle</button>
+            <button>
+            <Link
+                  to={{
+                    pathname: "/productdata",
+                    product: product
+                  }}
+                >Urun Bilgilerini Guncelle</Link>
+            </button>
           </div>
           <div className="card-action grey lighten-4 grey-text">
             <div>

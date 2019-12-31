@@ -36,7 +36,6 @@ const PeriodDetails = props => {
                     Olusturan: {period.authorFirstName} {period.authorLastName}
                   </div>
                   <div>
-                    {" "}
                     Tarih: {moment(period.createdAt.toDate()).calendar()}
                   </div>
                 </div>
