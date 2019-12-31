@@ -36,10 +36,8 @@ import {
                 console.log("ERROR")
         });
         
-        // #2. Farm ORDERs request:
+        // #2. React each order obj; check for FARM
         orderData.orders.forEach(order => {
-            
-            // Create SUBCOLLECTION
             firestore
                 .collection("farm_orders")
                 .doc(period.title)
@@ -55,24 +53,39 @@ import {
                     console.log("ERROR")
                 });
         });
-
+        
+        //Delegator method
         function getFarmOrders (farmname) {
             orderData.orders.forEach(order => {
 
                 if (!isEmpty(orderObj) && !isEmpty(orderObj[order.farmname])) {
-                    orderObj[order.farmname].push(order);
+                    if (!isOrderWritten(order)) {
+                        orderObj[order.farmname].push(order);
+                    }
                 } else {
                     orderObj[order.farmname] = [order];
                 }
             });
 
             combineFarmData(farmname)
-
+            
             return orderObj[farmname]
         }
 
+        function isOrderWritten (order) {
+            let defaultResult = false;
+
+            orderObj[order.farmname].forEach(farmorder => {
+                if (farmorder.id === order.id) {
+                    defaultResult = true;
+                }
+            });
+
+            return defaultResult;
+        }
+
         function combineFarmData (farmname) {
-            if (getState().firestore.ordered.farm_orders) {
+            if (!isEmpty(getState().firestore.ordered.farm_orders)) {
                 getState().firestore.ordered.farm_orders.forEach(order => {
                     if (order.id === farmname) {
                         order.orders.forEach(item => {

@@ -13,9 +13,6 @@ class FarmOrdersList extends Component {
 
     if (!auth.uid) return <Redirect to="/signin" />;
     if (farmOrders && farmOrders.length) {
-      let allFarms = []
-      farmOrders.forEach(farm => allFarms.push(farm.id));
-
       return (
         <div className="give-order container">
           <div>
@@ -24,10 +21,13 @@ class FarmOrdersList extends Component {
           <div className="row">
             <div className="col s5 create-order-card">
             <h5>{period.title} dagitim donemi: Siparis Alan Ureticiler...</h5>
-              {allFarms &&
-                allFarms.map((farm, index) => {
+              {farmOrders &&
+                farmOrders.map((farm, index) => {
+                  let farmOrders = [];
+                  farm.orders.forEach(order => farmOrders.push(order.title));
+
                   return (
-                    <p key={index}>{farm}</p>
+                    <p key={index}>{farm.id}: {farmOrders}</p>
                   );
                 })}
             </div>
