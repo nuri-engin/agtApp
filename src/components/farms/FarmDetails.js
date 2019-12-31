@@ -1,5 +1,5 @@
 //Core
-import React from "react";
+import React, {Component} from "react";
 import { Redirect, Link } from "react-router-dom";
 import moment from "moment";
 
@@ -11,80 +11,87 @@ import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 
-const FarmDetails = props => {
-  const { products, farm, auth } = props;
+import { deleteFarm } from "../../store/actions/farmActions";
 
-  if (!auth.uid) return <Redirect to="/signin" />;
-  if (farm) {
-    return (
-      <div className="dashboard container">
-        <div className="row">
-          <div className="col s12 m6">
-            <div className="container">
-              <h3 className="card-title">{farm.title}</h3>
-              <h5>{farm.content}</h5>
+class FarmDetails extends Component {
+  handleDelete = farm => {
+    if (window.confirm("Uretici silinecektir! Onanliyor musunuz?"))  {
+      this.props.deleteFarm(farm);
+      this.props.history.goBack(); 
+    }
+  }
 
+  render() {
+    const { products, farm, auth } = this.props;
+
+    if (!auth.uid) return <Redirect to="/signin" />;
+    if (farm) {
+      return (
+        <div className="container section farm-details">
+          <div className="card z-depth-0">
+            <div className="card-content">
+              <span className="card-title">{farm.title}</span>
+              <p>{farm.content}</p>
               <br />
-              ID: {farm.farmid}
               <br />
-              Olusturan: {farm.authorFirstName} {farm.authorLastName}
-              <br />
-              Tarih: {moment(farm.createdAt.toDate()).calendar()}
-              <br /><br /><br />
-            </div>
-            <div className="container">
-              <h5> Ureticiye ait urunler: </h5>
-              {products &&
-                products.map(product => {
-                  return (
-                    <Link
-                      to={"/product/" + product.title}
-                      key={product.productid}
-                    >
-                      <ProductCard product={product} />
-                    </Link>
-                  );
-                })}
-            </div>
-          </div>
-          <div className="col s12 m5 offset-m1">
-            <button>
-              <Link
+              <button>
+                <Link
                     to={{
-                      pathname: "/farmdata",
+                      pathname: "/productdata",
                       fromFarm: farm.title,
-                      farm: {
+                      product: {
+                        productid: farm.farmid + "" + Math.floor(Math.random()*1000+1),
                         farmid: farm.farmid,
-                        title: farm.title,
-                        content: farm.content
+                        farmname: farm.title
                       }
                     }}
-                  >Guncelle</Link>
-            </button>
-            <br />
-            <button>
-              <Link
-                  to={{
-                    pathname: "/productdata",
-                    fromFarm: farm.title,
-                    product: {
-                      productid: farm.farmid + "" + Math.floor(Math.random()*1000+1),
-                      farmid: farm.farmid,
-                      farmname: farm.title
-                    }
-                  }}
-                >Yeni Urun</Link>
-            </button>
+                  >Yeni Urun</Link>
+              </button>
+              <button>
+                <Link
+                      to={{
+                        pathname: "/farmdata",
+                        fromFarm: farm.title,
+                        farm: {
+                          farmid: farm.farmid,
+                          title: farm.title,
+                          content: farm.content
+                        }
+                      }}
+                    >Guncelle</Link>
+              </button>
+              <button onClick={() => {this.handleDelete(farm)}}>Sil</button>
+            </div>
+            <div className="card-action grey lighten-4 grey-text">
+              <div> ID: {farm.farmid}</div>
+              <div> Olusturan: {farm.authorFirstName} {farm.authorLastName}</div>
+              <div> Tarih: {moment(farm.createdAt.toDate()).calendar()}</div>
+            </div>
           </div>
+
+          <div className="container section product-details">
+                <h5> Ureticiye ait urunler: </h5>
+                {products &&
+                  products.map(product => {
+                    return (
+                      <Link
+                        to={"/product/" + product.title}
+                        key={product.productid}
+                      >
+                        <ProductCard product={product} />
+                      </Link>
+                    );
+                  })}
+              </div>
         </div>
-      </div>
-    );
-  } else {
-    return (
-      <div className="container center">
-        <p>Uretici bilgileri yuklenemedi...</p>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div className="container center">
+          <p>Uretici bilgileri yuklenemedi...</p>
+        </div>
+      );
+    }
   }
 };
 
@@ -120,8 +127,14 @@ const mapsStateToProps = (state, ownParams) => {
   };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    deleteFarm: farm => dispatch(deleteFarm(farm))
+  };
+};
+
 export default compose(
-  connect(mapsStateToProps),
+  connect(mapsStateToProps, mapDispatchToProps),
   firestoreConnect([
     { collection: "farms" },
     { collection: "products", orderBy: ["createdAt", "desc"] }

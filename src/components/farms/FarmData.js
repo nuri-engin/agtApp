@@ -27,7 +27,7 @@ class FarmData extends Component {
   handleSubmit = (farm) => {
     farm ? 
       this.props.updateFarm(this.state) : 
-      this.props.createCreate(this.state);
+      this.props.createFarm(this.state);
     
     this.props.history.goBack();
   };
