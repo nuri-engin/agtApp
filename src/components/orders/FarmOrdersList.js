@@ -16,7 +16,7 @@ class FarmOrdersList extends Component {
       return (
         <div className="give-order container">
           <div>
-            <p>Search/ Filter</p>
+            <p> Arama / Filtre </p>
           </div>
           <div className="row">
             <div className="col s5 create-order-card">
@@ -25,9 +25,34 @@ class FarmOrdersList extends Component {
                 farmOrders.map((farm, index) => {
                   let farmOrders = [];
                   farm.orders.forEach(order => farmOrders.push(order.title));
+                  
+                  function count(array_elements) {
+                    let countText = [];
+
+                    array_elements.sort();
+
+                    var current = null;
+                    var cnt = 0;
+                    for (var i = 0; i < array_elements.length; i++) {
+                        if (array_elements[i] !== current) {
+                            if (cnt > 0) {
+                              countText.push(" " + current + ' (' + cnt + ' adet)');
+                            }
+                            current = array_elements[i];
+                            cnt = 1;
+                        } else {
+                            cnt++;
+                        }
+                    }
+                    if (cnt > 0) {
+                      countText.push(" " + current + ' (' + cnt + ' adet)');
+                    }
+
+                    return countText;
+                }
 
                   return (
-                    <p key={index}>{farm.id}: {farmOrders}</p>
+                    <p key={index}>{farm.id}: {count(farmOrders)}</p>
                   );
                 })}
             </div>
