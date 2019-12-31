@@ -1,9 +1,7 @@
 //Core
 import React from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import moment from "moment";
-import { Link } from "react-router-dom";
-import { NavLink } from "react-router-dom";
 
 //UI
 import ProductCard from "../products/ProductCard";
@@ -53,7 +51,17 @@ const FarmDetails = props => {
             <button>Edit Farm</button>
             <br />
             <button>
-              <NavLink to="/productdata">Yeni Urun Ekle</NavLink>
+              <Link
+                  to={{
+                    pathname: "/productdata",
+                    fromFarm: farm.title,
+                    product: {
+                      productid: farm.farmid + "" + Math.floor(Math.random()*1000+1),
+                      farmid: farm.farmid,
+                      farmname: farm.title
+                    }
+                  }}
+                >Yeni Urun</Link>
             </button>
           </div>
         </div>

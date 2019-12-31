@@ -26,8 +26,8 @@ class ProductData extends Component {
     });
   };
 
-  handleSubmit = product => {
-    product ? 
+  handleSubmit = (product, fromFarm) => {
+    product && !fromFarm ? 
       this.props.updateProduct(this.state) : 
       this.props.createProduct(this.state);
     
@@ -53,16 +53,16 @@ class ProductData extends Component {
 
   render() {
     const { auth } = this.props;
-    const { product } = this.props.location;
+    const { product, fromFarm } = this.props.location;
 
     if (!auth.uid) return <Redirect to="/signin" />;
     return (
       <div className="container">
         <form className="white" onSubmit={(e) => {
             e.persist(); e.preventDefault();
-            this.handleSubmit(product)
+            this.handleSubmit(product, fromFarm)
           }}>
-          <h5 className="grey-text text-darken-3">Urun Karti: {product ? "Guncelle" : "Yeni"}</h5>
+          <h5 className="grey-text text-darken-3">Urun Karti: {product && !fromFarm ? "Guncelle" : "Yeni"}</h5>
 
           <div className="input-field">
             <label htmlFor="title" className={product ? "active" : ""}>Baslik</label>
@@ -95,7 +95,7 @@ class ProductData extends Component {
           </div>
 
           <div className="input-field">
-            <button className="btn pink lighten-1 z-depth-0">{product ? "Guncelle" : "Olustur"}</button>
+            <button className="btn pink lighten-1 z-depth-0">{product && !fromFarm ? "Guncelle" : "Olustur"}</button>
           </div>
         </form>
       </div>
