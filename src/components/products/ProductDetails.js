@@ -21,6 +21,7 @@ const ProductDetails = props => {
             <p>{product.content}</p>
             <br />
             <br />
+            <button>Urun Bilgilerini Guncelle</button>
           </div>
           <div className="card-action grey lighten-4 grey-text">
             <div>

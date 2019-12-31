@@ -26,6 +26,9 @@ const FarmDetails = props => {
               <h3 className="card-title">{farm.title}</h3>
               <h5>{farm.content}</h5>
 
+              <br />
+              ID: {farm.farmid}
+              <br />
               Olusturan: {farm.authorFirstName} {farm.authorLastName}
               <br />
               Tarih: {moment(farm.createdAt.toDate()).calendar()}
@@ -50,7 +53,7 @@ const FarmDetails = props => {
             <button>Edit Farm</button>
             <br />
             <button>
-              <NavLink to="/create-product">Yeni Urun Ekle</NavLink>
+              <NavLink to="/productdata">Yeni Urun Ekle</NavLink>
             </button>
           </div>
         </div>

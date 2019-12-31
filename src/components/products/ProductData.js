@@ -6,19 +6,23 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { createProduct } from "../../store/actions/productActions";
 
-class CreateProduct extends Component {
+class ProductData extends Component {
   state = {
-    productid: "",
+    productid: 0,
     title: "",
     content: "",
-    farmid: "",
+    farmid: 0,
     farmname: ""
   };
 
   handleChange = e => {
     e.persist();
+
+    //Ensure given number is converted to Number instead of String.
+    const targetValue = e.target.id.includes("id") ? Number(e.target.value) : e.target.value;
+
     this.setState({
-      [e.target.id]: e.target.value
+      [e.target.id]: targetValue
     });
   };
 
@@ -26,7 +30,7 @@ class CreateProduct extends Component {
     e.persist();
     e.preventDefault();
     this.props.createProduct(this.state);
-    this.props.history.push("/productlist");
+    this.props.history.goBack();
   };
 
   render() {
@@ -90,4 +94,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CreateProduct);
+)(ProductData);

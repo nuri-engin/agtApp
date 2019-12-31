@@ -15,8 +15,12 @@ class CreateFarm extends Component {
 
   handleChange = e => {
     e.persist();
+
+    //Ensure given number is converted to Number instead of String.
+    const targetValue = e.target.id.includes("id") ? Number(e.target.value) : e.target.value;
+
     this.setState({
-      [e.target.id]: e.target.value
+      [e.target.id]: targetValue
     });
   };
 

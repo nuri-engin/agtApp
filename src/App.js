@@ -12,7 +12,7 @@ import PeriodDetails from "./components/periods/PeriodDetails";
 import CreatePeriod from "./components/periods/CreatePeriod";
 
 import ProductDetails from "./components/products/ProductDetails";
-import CreateProduct from "./components/products/CreateProduct";
+import ProductData from "./components/products/ProductData";
 import ProductList from "./components/products/ProductList";
 
 import FarmDetails from "./components/farms/FarmDetails";
@@ -44,7 +44,7 @@ class App extends Component {
 
             {/* PRODUCT */}
             <Route path="/product/:title" component={ProductDetails} />
-            <Route exact path="/create-product" component={CreateProduct} />
+            <Route exact path="/productdata" component={ProductData} />
             <Route exact path="/productlist" component={ProductList} />
 
             {/* FARM */}

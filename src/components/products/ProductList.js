@@ -19,7 +19,7 @@ class ProductList extends Component {
       <div className="product container">
         <br />
         <button className="btn grey lighten-2 z-depth-0">
-          <NavLink to="/create-product">Yeni Urun Ekle</NavLink>
+          <NavLink to="/productdata">Yeni Urun Ekle</NavLink>
         </button>
         <div className="row">
           <div className="col s12 m6">
