@@ -37,6 +37,7 @@ class OrderCart extends Component {
       return (
         <div className="container">
           <h4>{period ? period.title + ' dagitim donemi: ' : ''} Henuz kayitli bir siparis listeniz yoktur!</h4>
+          return <Redirect to="/" />
         </div>
       );
     }
