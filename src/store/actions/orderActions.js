@@ -69,6 +69,7 @@ import {
 
             combineFarmData(farmname)
             
+            orderObj[farmname].isDone = true
             return orderObj[farmname]
         }
 
@@ -87,7 +88,7 @@ import {
         function combineFarmData (farmname) {
             if (!isEmpty(getState().firestore.ordered.farm_orders)) {
                 getState().firestore.ordered.farm_orders.forEach(order => {
-                    if (order.id === farmname) {
+                    if (order.id === farmname && !orderObj[farmname].isDone) {
                         order.orders.forEach(item => {
                             orderObj[item.farmname].push(item)
                         });

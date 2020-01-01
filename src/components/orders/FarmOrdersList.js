@@ -63,6 +63,7 @@ class FarmOrdersList extends Component {
       return (
         <div className="container">
           <h4>{period ? period.title + ' dagitim donemi: ' : ''} Henuz siparis alan uretici yoktur!</h4>
+          return <Redirect to="/" />
         </div>
       );
     }

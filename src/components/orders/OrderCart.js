@@ -1,6 +1,6 @@
 //Core
 import React, { Component } from "react";
-import { Redirect, Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 //Data
 import { connect } from "react-redux";
@@ -42,9 +42,7 @@ class OrderCart extends Component {
               {userOrders &&
                 userOrders.map(product => {
                   return (
-                    <Link to={"/product/" + product.title} key={product.id}>
-                      <ProductCard product={product} isOrderCart={false} />
-                    </Link>
+                    <ProductCard product={product} key={product.id} isOrderCart={false} />
                   );
                 })}
             </div>

@@ -19,12 +19,25 @@ class CreateOrder extends Component {
 
   handleAddToCard = product => {
     this.setState(state => {
-      const userOrders = [...state.userOrders, product];
+      let hasProduct = state.userOrders.filter(item => item.id === product.id)
+     
+      if (hasProduct.length) {
+        if (window.confirm(`Sepetinizde ayni urunden ${hasProduct.length} adet bulunmaktadir! Yine de eklemek ister misin?`)) {
+          const userOrders = [...state.userOrders, product];
+          
+          return {
+            userOrders,
+            item_count: this.state.item_count + 1 
+          }; 
+        }  
+      } else {
+        const userOrders = [...state.userOrders, product];
 
-      return {
-        userOrders,
-        item_count: this.state.item_count + 1 
-      };
+        return {
+          userOrders,
+          item_count: this.state.item_count + 1 
+        };  
+      }
     });
   };
 
@@ -60,13 +73,12 @@ class CreateOrder extends Component {
             {products &&
               products.map(product => {
                 return (
-                  <Link to={"/product/" + product.title} key={product.id}>
-                    <ProductCard
+                  <ProductCard
+                      key={product.id}
                       product={product}
                       isOrderCart={true}
                       handleAddToCard={this.handleAddToCard}
                     />
-                  </Link>
                 );
               })}
           </div>
